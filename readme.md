@@ -4,4 +4,4 @@ Solving a challenge in [.NET](https://dotnet.microsoft.com/en-us/learn/dotnet/wh
 
 - Taking items of a message queue. Consider that there is a some processing that is required to messages, that may take a little while. However we would not want to block receiving messages while that long processing occurs.
 - Once the long processing of the messages has happened, the messages need to be forwarded on. Assume there will be more than one at this point so send as many as can (batch).
-- This challenge does not have any external interfaces, so the creating of messages and final collection of batches are simulated. The internal complexity needs to be proven.
+- This challenge does not have any external interfaces, so the creating of messages and final collection of batches are simulated. The internal complexity is the challenge to be proven.
