@@ -44,7 +44,7 @@ public class ProducerConsumer
             // and simulate something that will take a little while to complete 
             Thread.Sleep(50);
 
-            // _readyToBeBatched.Add(item);
+            _readyToBeBatched.Add(item);
         }
     }
 
@@ -70,21 +70,18 @@ public class ProducerConsumer
                     readyToBeBatched.Add(readyItem);
                 }
             }
-            catch (OperationCanceledException)
-            {
-                Console.WriteLine($"Batch Loop Done!");
-            }
+            catch (OperationCanceledException) { }
             finally
             {
                 // if we have items in our batch create a new batch
                 // ready for consumption
-                if (_batches.Count > 0)
+                if (readyToBeBatched.Count > 0)
                 {
                     _batches.Add(new MessageBatch<string>(readyToBeBatched));
                 }
             }
 
-            Console.WriteLine($"Collection size now at {_readyToBeBatched.Count}");
+            Console.WriteLine($"Completed batching loop. Count of items that are outstanding are -> {_readyToBeBatched.Count}.");
         }
     }
 
@@ -94,15 +91,7 @@ public class ProducerConsumer
         {
             Thread.Sleep(20000);
 
-            Console.WriteLine();
-
-            foreach (var item in _batches)
-            {
-                Console.WriteLine($"Batch Id {item.Id} -> size {item.Items.Count}");
-            }
-
-            Console.WriteLine();
+            Console.WriteLine($"\nNumber of batches -> {_batches.Count}. Avg number of batches -> {_batches.Average(b => b.Items.Count)}.\n");
         }
     }
-
 }
