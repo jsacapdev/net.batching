@@ -6,6 +6,8 @@ public class ProducerConsumer
 {
     private static int BATCH_SIZE = 100;
 
+    private static int BATCH_THREAD_COUNT = 1;
+
     private readonly BlockingCollection<string> _staging = [];
 
     private readonly BlockingCollection<string> _readyToBeBatched = new BlockingCollection<string>(BATCH_SIZE);
@@ -16,7 +18,10 @@ public class ProducerConsumer
     {
         Task.Factory.StartNew(CreateMessages, TaskCreationOptions.LongRunning);
 
-        Task.Factory.StartNew(CreateBatch, TaskCreationOptions.LongRunning);
+        for (int i = 0; i < BATCH_THREAD_COUNT; i++)
+        {
+            Task.Factory.StartNew(CreateBatch, TaskCreationOptions.LongRunning);
+        }
 
         Task.Factory.StartNew(ReportOnBatchProgress, TaskCreationOptions.LongRunning);
     }
@@ -81,7 +86,7 @@ public class ProducerConsumer
                 }
             }
 
-            Console.WriteLine($"Completed batching loop. Count of items that are outstanding are -> {_readyToBeBatched.Count}.");
+            Console.WriteLine($"[Thread Id: {Environment.CurrentManagedThreadId}] Completed batching loop. Count of items that are outstanding are -> {_readyToBeBatched.Count}.");
         }
     }
 
@@ -91,7 +96,7 @@ public class ProducerConsumer
         {
             Thread.Sleep(20000);
 
-            Console.WriteLine($"\nNumber of batches -> {_batches.Count}. Avg number of batches -> {_batches.Average(b => b.Items.Count)}.\n");
+            Console.WriteLine($"\n[Thread Id: {Environment.CurrentManagedThreadId}] Number of batches -> {_batches.Count}. Avg number of batches -> {_batches.Average(b => b.Items.Count)}.\n");
         }
     }
 }
