@@ -93,7 +93,10 @@ public class MessageProcessor : IMessageProcessor
                     readyToBeBatched.Add(readyItem);
                 }
             }
-            catch (OperationCanceledException) { }
+            catch (OperationCanceledException) 
+            { 
+                _logger.LogInformation($"Created new batch of size {readyToBeBatched.Count}");
+            }
             finally
             {
                 // if we have items in our batch create a new batch

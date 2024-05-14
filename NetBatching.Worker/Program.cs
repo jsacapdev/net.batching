@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Azure;
+using Serilog;
 
 namespace NetBatching.Worker;
 
@@ -8,6 +9,11 @@ public class Program
     {
         var builder = Host.CreateApplicationBuilder(args);
         builder.Services.AddHostedService<Worker>();
+
+        builder.Services.AddSerilog(config =>
+        {
+            config.ReadFrom.Configuration(builder.Configuration);
+        });
 
         builder.Services.AddSingleton<IMessageReceiver, MessageReceiver>();
         builder.Services.AddSingleton<IMessageProcessor, MessageProcessor>();
