@@ -42,8 +42,6 @@ public class MessageReceiver : IMessageReceiver
             // and hand-off that long processing to something else 
             // using a staging queue
             _processor.Enqueue(msg);
-
-            Thread.Sleep(5000);
         }
 
         _logger.LogInformation("Finished MessageReceiver::GetMessageFromTopic()");

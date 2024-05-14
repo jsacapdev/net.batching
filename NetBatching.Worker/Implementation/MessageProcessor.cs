@@ -16,11 +16,11 @@ public class MessageProcessor : IMessageProcessor
 
     private readonly BlockingCollection<MessageBatch<string>> _events = [];
 
-    private readonly int _stagingProcessingThreadCount = 1;
+    private readonly int _stagingProcessingThreadCount = 3;
 
-    private readonly int _batchCreationThreadCount = 1;
+    private readonly int _batchCreationThreadCount = 3;
 
-    private readonly int _batchProcessingThreadCount = 1;
+    private readonly int _batchProcessingThreadCount = 3;
 
     public MessageProcessor(ILogger<MessageProcessor> logger,
                             IMessageSender sender,
