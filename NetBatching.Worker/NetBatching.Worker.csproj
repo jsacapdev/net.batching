@@ -30,9 +30,6 @@
     <PackageReference Include="Serilog.Settings.Configuration" Version="8.0.2" />
     <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
-    <PackageReference Include="Sonic.Dotnetcore.Client" Version="12.0.2">
-      <NoWarn>NU1701</NoWarn>
-    </PackageReference>
     <PackageReference Include="System.Text.Json" Version="8.0.4" />
   </ItemGroup>
 </Project>
